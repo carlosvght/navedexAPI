@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const uri = 'mongodb://localhost:27017/nave-challenge';
+const uri = 'mongodb://localhost:27017/navedexAPI';
 
 const options = {
   useUnifiedTopology: true,
