@@ -31,9 +31,32 @@ const find = async(req, res, next) => {
   }
 }
 
+const update = async(req, res, next) => {
+  try {
+    const query = {_id:req.params.id}
+    const naverReqBody = req.body
+    const name = req.body.name
+    const birthdate = req.body.birthdate
+    const admissionDate = req.body.admissionDate
+    const jobRole = req.body.jobRole
+    const naverObjectAttributesToUpdate = {
+      name,
+      birthdate,
+      admissionDate,
+      jobRole
+    }
+    const updatenaver = await naverModel.findByIdAndUpdate(query, naverObjectAttributesToUpdate)
+    res.status(201).json(updatenaver)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const objectModuleToExports = {
   create,
-  find
+  find,
+  update
 }
 
 module.exports = objectModuleToExports
