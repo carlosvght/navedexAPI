@@ -6,7 +6,8 @@ const create = async(req, res, next) => {
     const email = userReqBody.email
     const password = userReqBody.password
     const userObjectToCreate = {
-      email, password
+      email, 
+      password
     }
     const user = await userModel.create(userObjectToCreate)
     res.status(201).json(user)
