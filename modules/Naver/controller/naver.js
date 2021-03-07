@@ -24,7 +24,7 @@ const create = async(req, res, next) => {
 const find = async(req, res, next) => {
   try {
     const naverFind = await naverModel.find({_id:req.params.id})
-    res.status(201).json(naverFind)
+    res.status(200).json(naverFind)
   } catch (error) {
     console.log(error)
     res.status(400).json(error)
@@ -46,7 +46,17 @@ const update = async(req, res, next) => {
       jobRole
     }
     const updatenaver = await naverModel.findByIdAndUpdate(query, naverObjectAttributesToUpdate)
-    res.status(201).json(updatenaver)
+    res.status(200).json(updatenaver)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
+const remove = async(req, res, next) => {
+  try {
+    const deleteNaver = await naverModel.findByIdAndDelete({_id:req.params.id})
+    res.status(200).json(deleteNaver)
   } catch (error) {
     console.log(error)
     res.status(400).json(error)
@@ -56,7 +66,8 @@ const update = async(req, res, next) => {
 const objectModuleToExports = {
   create,
   find,
-  update
+  update,
+  remove
 }
 
 module.exports = objectModuleToExports
