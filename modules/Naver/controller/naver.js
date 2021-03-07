@@ -21,8 +21,19 @@ const create = async(req, res, next) => {
   }
 }
 
+const find = async(req, res, next) => {
+  try {
+    const naverFind = await naverModel.find({_id:req.params.id})
+    res.status(201).json(naverFind)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const objectModuleToExports = {
-  create
+  create,
+  find
 }
 
 module.exports = objectModuleToExports
