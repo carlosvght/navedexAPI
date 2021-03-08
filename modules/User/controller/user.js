@@ -17,6 +17,16 @@ const create = async(req, res, next) => {
   }
 }
 
+const findAllUserNavers = async(req, res, next) => {
+  try {
+    const findAllNavers = await userModel.find({_id:req.params.id})
+    res.status(200).json(findAllNavers)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const find = async(req, res, next) => {
   try {
     const findUser = await userModel.find({_id:req.params.id})
@@ -58,6 +68,7 @@ const remove = async(req, res, next) => {
 const objectModuleToExports = {
   create,
   find,
+  findAllUserNavers,
   update, 
   remove
 }

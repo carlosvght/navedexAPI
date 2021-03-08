@@ -3,7 +3,10 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   email: String, 
-  password: String
+  password: String,
+  navers: [{ type: Schema.Types.ObjectId,
+    ref: "Naver" 
+  }]
 });
 
 const user = mongoose.model('User', userSchema)

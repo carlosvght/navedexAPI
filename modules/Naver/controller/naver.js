@@ -1,20 +1,38 @@
 const naverModel = require('../model/naver')
+const userModel = require('../../User/model/user')
 
 const create = async(req, res, next) => {
   try {
-    const userReqBody = req.body
-    const name = req.body.name
-    const birthdate = req.body.birthdate
-    const admissionDate = req.body.admissionDate
-    const jobRole = req.body.jobRole
+    const naverReqBody = req.body
+    const name = naverReqBody.name
+    const birthdate = naverReqBody.birthdate
+    const admissionDate = naverReqBody.admissionDate
+    const jobRole = naverReqBody.jobRole
+    const userId = req.params.userId
     const naverObjectToCreate = {
       name,
       birthdate,
       admissionDate,
-      jobRole
+      jobRole,
+      user: {
+        _id: userId
+      }
     }
-    const naver = await naverModel.create(naverObjectToCreate)
-    res.status(201).json(naver)
+    const newNaver = new naverModel(naverObjectToCreate)
+    const savedNaver = await newNaver.save()
+    const userNaver = await userModel.findByIdAndUpdate(userId, {
+      $push: {
+        navers: {
+          _id: savedNaver._id, 
+          name: savedNaver.name,
+          birthdate: savedNaver.birthdate,
+          admissionDate: savedNaver.admissionDate,
+          jobRole: savedNaver.jobRole 
+        }
+      }
+    })
+    
+    res.status(201).json(savedNaver)
   } catch (error) {
     console.log(error)
     res.status(400).json(error)

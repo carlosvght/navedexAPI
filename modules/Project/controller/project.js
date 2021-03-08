@@ -3,7 +3,7 @@ const projectModel = require('../model/project')
 const create = async(req, res, next) => {
   try {
     const projectReqBody = req.body
-    const name = req.body.name
+    const name = projectReqBody.name
     const projectObjectToCreate = {
       name
     }

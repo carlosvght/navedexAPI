@@ -4,6 +4,7 @@ const userController = require('../controller/user')
 
 router.post('/user/register', userController.create)
 router.get('/user/:id', userController.find)
+router.get('/user/navers/:id', userController.findAllUserNavers)
 router.put('/user/update/:id', userController.update)
 router.delete('/user/delete/:id', userController.remove)
 
