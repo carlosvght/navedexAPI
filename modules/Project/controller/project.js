@@ -41,10 +41,21 @@ const update = async(req, res, next) => {
   }
 }
 
+const remove = async(req, res, next) => {
+  try {
+    const deleteProject = await projectModel.findByIdAndDelete({_id:req.params.id})
+    res.status(200).json(deleteProject)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const objectModuleToExports = {
   create,
   find,
-  update
+  update,
+  remove
 }
 
 module.exports = objectModuleToExports
