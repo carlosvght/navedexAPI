@@ -1,14 +1,28 @@
 const projectModel = require('../model/project')
+const naverModel = require('../../Naver/model/naver')
 
 const create = async(req, res, next) => {
   try {
     const projectReqBody = req.body
     const name = projectReqBody.name
+    const naverId = req.params.naverId
+
     const projectObjectToCreate = {
-      name
+      name, naver: {
+        _id: naverId
+      }
     }
-    const project = await projectModel.create(projectObjectToCreate)
-    res.status(201).json(project)
+    const newProject = new projectModel(projectObjectToCreate)
+    const savedProject = await newProject.save()
+    const naverProject = await naverModel.findByIdAndUpdate(naverId, {
+      $push: {
+        projects: {
+          _id: savedProject.id,
+          name: savedProject.name
+        }
+      }
+    })
+    res.status(201).json(savedProject)
   } catch (error) {
     console.log(error)
     res.status(400).json(error)

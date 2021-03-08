@@ -49,6 +49,16 @@ const find = async(req, res, next) => {
   }
 }
 
+const findAllNaverProjects = async(req, res, next) => {
+  try {
+    const findAllProjects = await naverModel.find({_id:req.params.id}).populate("projects")
+    res.status(200).json(findAllProjects)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const update = async(req, res, next) => {
   try {
     const query = {_id:req.params.id}
@@ -84,6 +94,7 @@ const remove = async(req, res, next) => {
 const objectModuleToExports = {
   create,
   find,
+  findAllNaverProjects,
   update,
   remove
 }
