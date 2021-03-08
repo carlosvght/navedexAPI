@@ -15,8 +15,19 @@ const create = async(req, res, next) => {
   }
 }
 
+const find = async(req, res, next) => {
+  try {
+    const findProject = await projectModel.find({_id:req.params.id})
+    res.status(200).json(findProject)
+  } catch (error) {
+    console.log(error)
+    res.status(400).json(error)
+  }
+}
+
 const objectModuleToExports = {
-  create
+  create,
+  find
 }
 
 module.exports = objectModuleToExports
