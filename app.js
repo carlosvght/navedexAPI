@@ -2,6 +2,8 @@ require('./config/db.config');
 const userRouter = require('./modules/User/route/user');
 const naverRouter = require('./modules/Naver/route/naver');
 const projectRouter = require('./modules/Project/route/project');
+const loginRouter = require('./modules/Login/route/login')
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -18,7 +20,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
 
-//app.use('/', indexRouter);
+app.use('/api/v1', loginRouter);
 app.use('/api/v1', userRouter);
 app.use('/api/v1', naverRouter);
 app.use('/api/v1', projectRouter);
