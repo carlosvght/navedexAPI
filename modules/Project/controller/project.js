@@ -41,8 +41,8 @@ const find = async(req, res, next) => {
 
 const update = async(req, res, next) => {
   try {
-    const query = {_id:req.params.id}
-    const projectReqBody = req.body 
+    const query = { _id:req.params.id }
+    const projectReqBody = req.body
     const name = req.body.name
     const projectObjectAttributesToUpdate = {
       name

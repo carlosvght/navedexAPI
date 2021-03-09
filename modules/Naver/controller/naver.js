@@ -3,12 +3,13 @@ const userModel = require('../../User/model/user')
 
 const create = async(req, res, next) => {
   try {
+
     const naverReqBody = req.body
     const name = naverReqBody.name
     const birthdate = naverReqBody.birthdate
     const admissionDate = naverReqBody.admissionDate
     const jobRole = naverReqBody.jobRole
-    const userId = req.params.userId
+    const userId = req.decoded._id
     const naverObjectToCreate = {
       name,
       birthdate,
@@ -23,15 +24,15 @@ const create = async(req, res, next) => {
     const userNaver = await userModel.findByIdAndUpdate(userId, {
       $push: {
         navers: {
-          _id: savedNaver._id, 
+          _id: savedNaver._id,
           name: savedNaver.name,
           birthdate: savedNaver.birthdate,
           admissionDate: savedNaver.admissionDate,
-          jobRole: savedNaver.jobRole 
+          jobRole: savedNaver.jobRole
         }
       }
     })
-    
+
     res.status(201).json(savedNaver)
   } catch (error) {
     console.log(error)
@@ -63,10 +64,11 @@ const update = async(req, res, next) => {
   try {
     const query = {_id:req.params.id}
     const naverReqBody = req.body
-    const name = req.body.name
-    const birthdate = req.body.birthdate
-    const admissionDate = req.body.admissionDate
-    const jobRole = req.body.jobRole
+    const name = naverReqBody.name
+    const birthdate = naverReqBody.birthdate
+    const admissionDate = naverReqBody.admissionDate
+    const jobRole = naverReqBody.jobRole
+
     const naverObjectAttributesToUpdate = {
       name,
       birthdate,
@@ -98,5 +100,4 @@ const objectModuleToExports = {
   update,
   remove
 }
-
 module.exports = objectModuleToExports

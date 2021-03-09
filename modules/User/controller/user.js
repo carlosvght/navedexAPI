@@ -7,7 +7,7 @@ const create = async(req, res, next) => {
     const email = userReqBody.email
     const password = userReqBody.password
     const userObjectToCreate = {
-      email, 
+      email,
       password
     }
 
@@ -23,7 +23,7 @@ const create = async(req, res, next) => {
 
 const findAllUserNavers = async(req, res, next) => {
   try {
-    const findAllNavers = await userModel.find({_id:req.params.id}).populate('navers')
+    const findAllNavers = await userModel.find({ _id: req.decoded._id }, 'navers email').populate('navers')
     res.status(200).json(findAllNavers)
   } catch (error) {
     console.log(error)
@@ -33,7 +33,7 @@ const findAllUserNavers = async(req, res, next) => {
 
 const find = async(req, res, next) => {
   try {
-    const findUser = await userModel.find({_id:req.params.id})
+    const findUser = await userModel.find({ _id: req.decoded._id }, 'email')
     res.status(200).json(findUser)
   } catch (error) {
     console.log(error)
@@ -43,21 +43,31 @@ const find = async(req, res, next) => {
 
 const update = async(req, res, next) => {
   try {
-    const query = {_id:req.params.id}
-    const userReqBody = req.body
-    const email = userReqBody.email
-    const password = userReqBody.password
+    const query = { _id: req.decoded._id }
+
+    const { email, password } = req.body
 
     const newHashPass = (passInput) => {
       const salt = crypto.randomBytes(64).toString('hex')
       const hash = crypto.pbkdf2Sync(passInput, salt, 100000, 512, 'sha512').toString('hex')
       return { newSalt: salt, newHash: hash }
     }
-    
-    const newUserPass = newHashPass(password)
-    const updateAttributes = { email: email,  password: { salt: newUserPass.newSalt, hash: newUserPass.newHash }}
+
+    let updateAttributes = { }
+    if(email && password) {
+      const newUserPass = newHashPass(password)
+      updateAttributes = { email: email, password: { salt: newUserPass.newSalt, hash: newUserPass.newHash } }
+    }
+    else if(email) {
+      updateAttributes = { email: email }
+    }
+    else if(password) {
+      const newUserPass = newHashPass(password)
+      updateAttributes = { password: { salt: newUserPass.newSalt, hash: newUserPass.newHash } }
+    }
+
     const updateUser = await userModel.findByIdAndUpdate(query, updateAttributes)
-    res.status(200).json({ message: 'User updated'}) 
+    res.status(200).json({ message: 'User updated'})
   } catch (error) {
     console.log(error)
     res.status(400).json(error)
@@ -66,11 +76,11 @@ const update = async(req, res, next) => {
 
 const remove = async(req, res, next) => {
   try {
-    const deleteUser = await userModel.findByIdAndDelete({_id:req.params.id})
+    const deleteUser = await userModel.findByIdAndDelete({ _id: req.decoded._id })
     res.status(200).json(deleteUser)
   } catch (error) {
     console.log(error)
-    res.status(400).json(error)  
+    res.status(400).json(error)
   }
 }
 
@@ -78,7 +88,7 @@ const objectModuleToExports = {
   create,
   find,
   findAllUserNavers,
-  update, 
+  update,
   remove
 }
 

@@ -28,5 +28,4 @@ mongoose.connect(uri, options)
   mongoose.disconnect()
 })
 
-
 module.exports = mongoose;
