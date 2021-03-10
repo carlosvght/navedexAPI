@@ -1,5 +1,5 @@
 <p>I used insomnia to test the API routes, if you want to use it too, just click the button below and all endpoints will be imported into your system</p>
-<a href="https://insomnia.rest/run/?label=NavedexAPI&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlosvght%2FnavedexAPI%2Fmain%2FInsomniaExport.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+<a href="https://insomnia.rest/run/?label=navedexAPI&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlosvght%2FnavedexAPI%2Fmain%2FInsomniaExport.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 <hr>
 
 <p>If for some reason you don't want to test with insomnia or some problem here are explained:</p>
