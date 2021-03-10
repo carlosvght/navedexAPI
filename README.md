@@ -1,9 +1,9 @@
 <h1 align="center">How to run the application:</h1>
 <h4>Requirements</h4>
 <ul>
-  <li>Node: v14.16.0
-  <li>NPM: v6.14.11
-  <li>MongoDB: v4.4
+  <li>Node: v14.16.0</li>
+  <li>NPM: v6.14.11</li>
+  <li>MongoDB: v4.4</li>
 </ul>
 
 <h4>Steps</h4>
